@@ -63,10 +63,16 @@ app.post('/api/persons', (req, res) => {
         return res.status(400).json({
             error: 'No Content'
         })
-    } else {
+    } else if(req.body.name === "" || req.body.number === ""){
+        return res.status(400).json({
+            error: 'No Content'
+        })
+    }else {
         let newContact = {
             id: generateId(),
-            name: req.body.name,
+            name: phoneBook.filter(a => a === req.body.name).length === 0 ? req.body.name : res.status(400).json({
+                error: 'Name should be unique'
+            }),
             number: req.body.number
         }
         res.json(newContact)
