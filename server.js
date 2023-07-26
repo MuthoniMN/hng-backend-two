@@ -37,7 +37,11 @@ app.get('/info', (req, res) => {
 app.get('/api/persons/:id', (req, res) => {
     let id = req.params.id
     let phone = phoneBook.find(contact => contact.id == id)
-    res.json(phone)
+    if (!phone) {
+        res.status(204).end()
+    }else{
+        res.json(phone)
+    }
 })
 
 app.listen(3333, () => console.log("We Running Hunnnaaaayyyyy"))
