@@ -38,7 +38,7 @@ app.get('/api/persons/:id', (req, res) => {
     let id = req.params.id
     let phone = phoneBook.find(contact => contact.id == id)
     if (!phone) {
-        res.status(204).end()
+        return res.status(204).end()
     }else{
         res.json(phone)
     }
@@ -47,6 +47,30 @@ app.get('/api/persons/:id', (req, res) => {
 app.delete('/api/persons/:id', (req, res) => {
     let id = req.params.id
     res.json(phoneBook.filter(contact => contact.id != id))
+})
+
+const generateId = () => {
+    let randomNum = Math.floor(Math.random() * 100)
+    if(randomNum > Math.max(...phoneBook.map(a => a.id))){
+        return randomNum
+    }else{
+        return generateId()
+    }
+}
+
+app.post('/api/persons', (req, res) => {
+    if (!req.body) {
+        return res.status(400).json({
+            error: 'No Content'
+        })
+    } else {
+        let newContact = {
+            id: generateId(),
+            name: req.body.name,
+            number: req.body.number
+        }
+        res.json(newContact)
+    }
 })
 
 app.listen(3333, () => console.log("We Running Hunnnaaaayyyyy"))
