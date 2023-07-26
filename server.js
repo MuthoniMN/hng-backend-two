@@ -44,4 +44,9 @@ app.get('/api/persons/:id', (req, res) => {
     }
 })
 
+app.delete('/api/persons/:id', (req, res) => {
+    let id = req.params.id
+    res.json(phoneBook.filter(contact => contact.id != id))
+})
+
 app.listen(3333, () => console.log("We Running Hunnnaaaayyyyy"))
