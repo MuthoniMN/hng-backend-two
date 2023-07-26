@@ -29,4 +29,14 @@ app.get('/api/persons', (req, res) => {
     res.json(phoneBook)
 })
 
+app.get('/info', (req, res) => {
+    const currentTime = new Date()
+    res.end(`<p>Phonebook has info of ${phoneBook.length} people.</p><p>${currentTime}<p>`)
+})
+
+app.get('/api/persons/:id', (req, res) => {
+    let id = req.params.id
+    res.end(phoneBook.find(contact => contact.id == id))
+})
+
 app.listen(3333, () => console.log("We Running Hunnnaaaayyyyy"))
