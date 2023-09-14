@@ -64,6 +64,7 @@ app.post('/api', (req, res) => {
         id: data + 1,
       })
       person.save()
+      res.json(person)
     })
     .catch(err => console.error(err))
   
