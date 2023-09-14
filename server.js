@@ -1,13 +1,12 @@
 const express = require("express")
 const app = express()
+const bodyParser = require('body-parser')
 const mongoose = require("mongoose")
 require('dotenv').config()
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+app.use(bodyParser.json())
 
-const generateId = () => {
-    return Math.max(...phoneBook.map((a) => a.id))++
-}
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const personSchema = new mongoose.Schema({
     name: {
@@ -20,6 +19,12 @@ const personSchema = new mongoose.Schema({
   })
 
 let Person = mongoose.model('Person', personSchema);
+let ids = []
+const generateId = () => {
+    let num = ids ? Math.max(...ids) + 1 : 0
+    ids.push(num)
+    return num;
+}
 
 app.use(express.json())
 
@@ -57,14 +62,12 @@ app.put('/api/:id', (req, res) => {
       .catch((err) =>  console.error(err))
 })
 
-app.post('/api/', (req, res) => {
+app.post('/api', (req, res) => {
+    console.log(req);
     let person = new Person({
         name: req.body.name,
         id: generateId(),
       })
-      person.save((err, data) => {
-        if(err) console.error(err)
-        console.log("Saved!!!")
-      })
+      person.save()
 })
 app.listen(3333, () => console.log("We Running Hunnnaaaayyyyy"))
