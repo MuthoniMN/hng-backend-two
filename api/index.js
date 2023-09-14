@@ -27,7 +27,7 @@ app.get('/api/:id', (req, res) => {
   Person.findOne({
     id: id
   })
-    .then((data) => res.json(data))
+    .then((data) => res.json(data || "Person not found"))
     .catch((err) => console.error(err))
 })
 
