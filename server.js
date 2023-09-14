@@ -15,6 +15,8 @@ const personSchema = new mongoose.Schema({
     }
   })
 
+let Person = mongoose.model('Person', personSchema);
+
 app.use(express.json())
 
 app.get('/api/:id', (req, res) => {
