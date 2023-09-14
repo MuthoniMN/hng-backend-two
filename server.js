@@ -68,4 +68,4 @@ app.post('/api', (req, res) => {
     .catch(err => console.error(err))
   
 })
-app.listen(3333, () => console.log("We Running Hunnnaaaayyyyy"))
+app.listen(3000, () => console.log("We Running Hunnnaaaayyyyy"))
