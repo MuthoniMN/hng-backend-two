@@ -36,7 +36,7 @@ app.delete('/api/:id', (req, res) => {
   Person.deleteOne({
     id: id
   })
-    .then((data) => res.json(data || "Person not found"))
+    .then((data) => res.json(data.deletedCount > 0 ? data  : "Person not found"))
     .catch((err) => console.error(err))
 })
 
