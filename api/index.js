@@ -52,7 +52,7 @@ app.put('/api/:id', (req, res) => {
     },
     { new: true }
   )
-    .then((data) => res.json(data))
+    .then((data) => res.json(data || "Person not found"))
     .catch((err) => console.error(err))
 })
 
